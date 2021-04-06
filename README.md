@@ -17,11 +17,11 @@ Flix is an app that allows users to browse movies from the [The Movie Database A
 - [x] (1pt) Run your app on a real device.
 
 ### App Walkthrough GIF 
-![Demo File](https://github.com/sosjeffy/flixster/blob/main/walkthrough.gif)
+![Demo File](https://github.com/sosjeffy/flixster/blob/main/walkthrough2.gif)
 
 
 
 
 
 ### Notes
-The biggest challenge when building the app was accidentally using type "any" instead of "Any", which led to a few errors and 30+ minutes of pain and suffering. 
+The biggest challenge when building the app was accidentally using type "any" instead of "Any", which led to a few errors and 30+ minutes of pain and suffering. I also had struggles with updating the GIF Walkthrough. I was unable to remove the old one because of a merge failure on my own PC, so for time-saving reasons I uploaded a second GIF while retaining the original GIF in Github. 
