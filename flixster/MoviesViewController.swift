@@ -9,17 +9,30 @@ import UIKit
 import AlamofireImage
 
 class MoviesViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
-    
-    
     @IBOutlet var tableView: UITableView!
     
     // Global vars available for lifetime of screen
     var movies = [[String:Any]]()
+//    override func viewWillAppear(_ animated: Bool) {
+//           super.viewWillAppear(animated)
+//           navigationController?.navigationBar.prefersLargeTitles = true
+//
+//           let appearance = UINavigationBarAppearance()
+//           appearance.backgroundColor = .purple
+//           appearance.titleTextAttributes = [.foregroundColor: UIColor.white]
+//           appearance.largeTitleTextAttributes = [.foregroundColor: UIColor.white]
+//
+//           navigationController?.navigationBar.tintColor = .white
+//           navigationController?.navigationBar.standardAppearance = appearance
+//           navigationController?.navigationBar.compactAppearance = appearance
+//           navigationController?.navigationBar.scrollEdgeAppearance = appearance
+//
+//   }
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.delegate = self
         tableView.dataSource = self
-        print("Hello")
+        
         // Do any additional setup after loading the view.
         let url = URL(string: "https://api.themoviedb.org/3/movie/now_playing?api_key=a07e22bc18f5cb106bfe4cc1f83ad8ed")!
         let request = URLRequest(url: url, cachePolicy: .reloadIgnoringLocalCacheData, timeoutInterval: 10)
@@ -32,10 +45,6 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
               let dataDictionary = try! JSONSerialization.jsonObject(with: data, options: []) as! [String: Any]
             self.movies = dataDictionary["results"] as! [[String:Any]]
             self.tableView.reloadData()
-              // TODO: Get the array of movies
-            
-              // TODO: Store the movies in a property to use elsewhere
-              // TODO: Reload your table view data
 
            }
         }
@@ -61,18 +70,33 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
         let posterPath = movie["poster_path"] as! String
         let posterURL = URL(string: baseURL + posterPath)
         
-        cell.posterView.af_setImage(withURL: posterURL!)
+        cell.posterView.af.setImage(withURL: posterURL!)
+        cell.movieBackgroundView.af.setImage(withURL: posterURL!)
+        
+        // Blurring background
+        cell.blur()
+
         return cell
     }
 
-    /*
+    
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         // Get the new view controller using segue.destination.
         // Pass the selected object to the new view controller.
+        
+        // Find selected movie
+        let cell = sender as! UITableViewCell
+        let indexPath = tableView.indexPath(for: cell)!
+        let movie = movies[indexPath.row]
+        let detailsViewController = segue.destination as! MovieDetailsViewController
+        detailsViewController.movie = movie
+        
+        tableView.deselectRow(at: indexPath, animated: true)
+        // Pass selected movie to details view controller
     }
-    */
+    
 
 }
